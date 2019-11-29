@@ -9,10 +9,8 @@ function makeGameHarder() {
 }
 
 let racingCar = new RacingCar();
-racingCar.beginCar();
 let obstacles = [];
 let multiObs = new MultiObstace();
-multiObs.createMultiObstace();
 
 
 function isColliding(object1, object2) {
@@ -131,6 +129,8 @@ function startGame() {
     makeGameHarder()}
 
 function playGame(){
+    racingCar.beginCar();
+    multiObs.createMultiObstace();
     canvas.removeEventListener('click', playGame);
     play = setInterval(startGame, 30);
 }
