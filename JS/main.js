@@ -2,7 +2,7 @@ let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
 let score = 0;
-let obsacleSpeedMin = 4;
+let obsacleSpeedMin = 3;
 
 function makeGameHarder() {
     obsacleSpeedMin = 4 + (score/100);
@@ -88,8 +88,8 @@ function menu() {
     ctx.font = '24px Arial';
     ctx.fillText('Click to Play', canvas.width / 2, canvas.height / 2);
     ctx.font = '18px Arial';
-    ctx.fillText('Dùng phím mũi tên để di chuyển, ăn xu được 30đ, vượt 1 xe được 1đ', canvas.width / 2, (canvas.height / 4) * 3);
-    // Start the game on a click
+    ctx.fillText('Dùng phím mũi tên để di chuyển', canvas.width / 2, (canvas.height / 4) * 3);
+    ctx.fillText('Ăn xu được 30đ, vượt 1 xe được 1đ', canvas.width / 2, (canvas.height / 4) *3.2);
     canvas.addEventListener('click', playGame);
 }
 
@@ -104,6 +104,7 @@ function endGame() {
     ctx.textAlign = 'center';
     ctx.fillText('Game Over. Final Score: ' + score, canvas.width/2, canvas.height/2);
     ctx.fillText('Click để reload', canvas.width/2, canvas.height/2 +30);
+    racingCar.car.speed =0;
     canvas.addEventListener('click', reloadGame);
 }
 
@@ -131,7 +132,7 @@ function startGame() {
 
 function playGame(){
     canvas.removeEventListener('click', playGame);
-    play = setInterval(startGame, 50);
+    play = setInterval(startGame, 30);
 }
 
 menu();

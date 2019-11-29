@@ -1,7 +1,7 @@
 let Obstacle = function (src,width,height) {
         this.y = 0;
         this.x = Math.floor(Math.random()*(canvas.width/CAR_WIDTH))*CAR_WIDTH;
-        this.speed = Math.random()*9+ obsacleSpeedMin;
+        this.speed = Math.random()*6+ obsacleSpeedMin;
         this.width = width;
         this.height = height;
         this.img = new Image();
