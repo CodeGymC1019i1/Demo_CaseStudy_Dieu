@@ -5,7 +5,7 @@ let score = 0;
 let obsacleSpeedMin = 3;
 
 function makeGameHarder() {
-    obsacleSpeedMin = 4 + (score/100);
+    obsacleSpeedMin = 3 + (score/100);
 }
 
 let racingCar = new RacingCar();
