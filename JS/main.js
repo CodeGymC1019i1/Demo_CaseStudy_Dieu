@@ -88,7 +88,7 @@ function menu() {
     ctx.font = '24px Arial';
     ctx.fillText('Click to Play', canvas.width / 2, canvas.height / 2);
     ctx.font = '18px Arial';
-    ctx.fillText('Dung phim mui ten de di chuyen', canvas.width / 2, (canvas.height / 4) * 3);
+    ctx.fillText('Dùng phím mũi tên để di chuyển, ăn xu được 30đ, vượt 1 xe được 1đ', canvas.width / 2, (canvas.height / 4) * 3);
     // Start the game on a click
     canvas.addEventListener('click', playGame);
 }
