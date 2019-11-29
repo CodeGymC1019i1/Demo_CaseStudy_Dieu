@@ -2,143 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>racing car</title>
-    <script src="car.js"></script>
-    <script src="impediment.js"></script>
+    <title>Racing Car</title>
 </head>
-<body onkeydown="racingCar.moveCar(event)">
+<body onkeydown="racingCar.moveCar()">
+
+    <img src="images/road3.png"  style="display: none"/>
+    <img src="images/road2.png"  style="display: none"/>
+    <img src="images/road1.png"  style="display: none"/>
+    <img src="images/object2.png"  style="display: none"/>
+    <img src="images/object1.png"  style="display: none"/>
+    <img src="images/object0.png"  style="display: none"/>
+    <img src="images/crash.jpg"  style="display: none"/>
+    <img src="images/coin.png"  style="display: none"/>
+    <img src="images/car.png"  style="display: none"/>
     <audio autoplay loop>
-        <source src="racing.mp3" type="audio/mpeg" >
+        <source src="audio/racing.mp3" type="audio/mp3">
     </audio>
-    <img src="car.png" height="100" width="50" style="display: none"/>
-    <img src="road3.png" height="623" width="374" style="display: none"/>
-    <img src="road2.png" height="623" width="374" style="display: none"/>
-    <img src="road1.png" height="623" width="374" style="display: none"/>
-    <img src="Accident.jpg" width="374" height="623"  style="display: none"/>
-    <img src="impediment0.png" height="100" width="50" style="display: none"/>
-    <img src="impediment1.png" height="100" width="50" style="display: none"/>
-    <img src="impediment2.png" height="100" width="50" style="display: none"/>
-    <img src="impediment3.png" height="49" width="50" style="display: none"/>
-    <canvas id="myCanvas" width="374px" height="623px" style="border: 1px solid black" >
+    <canvas id = "myCanvas"  height="600px" width="350px" style="border: 1px solid black">
         Trình duyệt của bạn không hỗ trợ thẻ canvas trong HTML5</canvas>
-    <script>
 
-        let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        let arrImpe = [];
-        let arrRoad = [];
-        let z = 0
-        let play = "";
-        let score = 0;
-        let n = 1;
-        let racingCar = new RacingCar(canvas);
-        let multiImpe = new MultiImpediment(canvas)
-
-
-        function creatRoad() {
-            let imgRoad1 = new Image();
-            imgRoad1.src = "road1.png";
-            let imgRoad2 = new Image();
-            imgRoad2.src = "road2.png";
-            let imgRoad3 = new Image();
-            imgRoad3.src = "road3.png";
-
-            for (let i = 0; i < 10; i++) {
-                arrRoad[i] = imgRoad1;
-            }
-            for (let i = 10; i < 20; i++) {
-                arrRoad[i] = imgRoad2;
-            }
-            for (let i = 20; i < 30; i++) {
-                arrRoad[i] = imgRoad3;
-            }
-            if (z < arrRoad.length) {
-                ctx.drawImage(arrRoad[z], 0, 0);
-                if (z ===29)
-                    z= 0;
-            }
-            z++;
-        }
-
-        function moveMultiImpediment() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            creatRoad();
-            racingCar.begin();
-            for (let i = 0; i < n; i++) {
-                arrImpe[i].drawImpediment();
-                score = arrImpe[i].moveDown(score);
-		console.log(arrImpe[i].image.src);
-                //xu ly va cham
-                for (let j = i+1; j < n; j++) {
-                    if (accident(arrImpe[i],arrImpe[j]))
-                        if(arrImpe[i].speed > arrImpe[j].speed)
-                            arrImpe[i].speed = arrImpe[j].speed;
-                    if(arrImpe[i].speed < arrImpe[j].speed)
-                        arrImpe[j].speed = arrImpe[i].speed;
-                }
-                if (accident(racingCar.car,arrImpe[i])) {
-                    if(arrImpe[i].image.src.indexOf("impediment3.png") >=0 ) {
-			
-                        score += 30;
-                        arrImpe[i].y = canvas.height;
-                    } else
-                        endGame();
-                }
-            }
-            n = parseInt((score+100)/100);
-            showScore(score);
-
-        }
-
-        function accident(car1,car2) {
-            return car1.x+car1.width > car2.x + 10 && car1.x + 10 < car2.x+car2.width &&
-                car1.y < car2.y+car2.height-30 && car1.y+car1.height-30>car2.y;
-
-        }
-        function erase() {
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        function menu() {
-            erase();
-            ctx.fillStyle = "#000000";
-            ctx.font = "36px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText("RACING CAR",canvas.width/2,canvas.height/4);
-            ctx.font = '24px Arial';
-            ctx.fillText('Click to Play', canvas.width / 2, canvas.height / 2);
-            ctx.font = '18px Arial';
-            ctx.fillText('Dung phim mui ten de di chuyen', canvas.width / 2, (canvas.height / 4) * 3);
-            // Start the game on a click
-            canvas.addEventListener('click', playGame);
-        }
-
-        function playGame() {
-            arrImpe = multiImpe.createMultiImpediment();
-            console.log(arrImpe);
-            play = setInterval(moveMultiImpediment,10);
-        }
-        function endGame() {
-            // Stop the spawn interval
-            clearInterval(play);
-            // Show the final score
-            erase();
-            let imgAccident = new Image();
-            imgAccident.src = "Accident.jpg";
-            ctx.drawImage(imgAccident,0,0);
-            ctx.fillStyle = '#91ff33';
-            ctx.font = '24px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('Game Over. Final Score: ' + score, canvas.width / 2, canvas.height / 2);
-        }
-        function showScore(score) {
-            ctx.fillStyle = "white";
-            ctx.font = '22px Arial';
-            ctx.textAlign = 'left';
-            ctx.fillText(' Score: ' + score, 15, 25);
-        }
-        menu();
-
-    </script>
+    <script src="JS/Const.js"></script>
+    <script src="JS/car.js"></script>
+    <script src="JS/obstacle.js"></script>
+    <script src="JS/main.js"></script>
 </body>
 </html>

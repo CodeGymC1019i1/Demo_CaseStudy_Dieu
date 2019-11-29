@@ -1,0 +1,11 @@
+const CAR_WIDTH = 50;
+const CAR_HEIGHT = 100;
+const CAR_SPEED = 10;
+
+const COIN_WIDTH = 50;
+const COIN_HEIGHT = 50;
+
+const TIME_BETWEEN_ENEMIES = 1500;
+const TIME_BETWEEN_COIN  = 5000;
+
+
